@@ -18,6 +18,7 @@ Enhancements in this fork include:
 * Updated Leaving Soon support that keeps the existing Jellyfin collection for normal clients and adds a read-only admin dashboard view.
 * Dry-run handling that avoids mutating the Leaving Soon collection.
 * Compatibility and safety fixes from the open upstream PRs noted above.
+* Configurable date formatting, for the Troubleshooting log - defaults to `YYYYMMDD`.
 
 <table>
   <tr>
@@ -44,7 +45,7 @@ Enhancements in this fork include:
   </tr>
   <tr>
     <td colspan="3" align="center">
-      <img src="https://github.com/user-attachments/assets/eee09588-2a90-4504-88cd-fc141f647173" alt="Screenshot 7" height="260">
+      <img src="https://github.com/user-attachments/assets/b7c2864f-7a5b-4bb5-b859-04361b61247d" alt="Screenshot 7" height="260">
     </td>
   </tr>
 </table>
