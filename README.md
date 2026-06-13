@@ -1,4 +1,4 @@
-# Warning: AI-developed fork
+# ⚠️ Warning: AI-developed fork
 
 This fork contains commits developed with AI assistance. Review the changes before relying on them outside a personal environment.
 
@@ -18,6 +18,38 @@ Enhancements in this fork include:
 * Updated Leaving Soon support that keeps the existing Jellyfin collection for normal clients and adds a read-only admin dashboard view.
 * Dry-run handling that avoids mutating the Leaving Soon collection.
 * Compatibility and safety fixes from the open upstream PRs noted above.
+
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <img src="https://github.com/user-attachments/assets/f68422c4-1870-4d24-aa25-de3fe7a8705a" alt="Screenshot 1" height="260">
+    </td>
+    <td width="33%" align="center">
+      <img src="https://github.com/user-attachments/assets/d759791e-cc60-4e40-9a0e-4418d5cd6e01" alt="Screenshot 2" height="260">
+    </td>
+    <td width="33%" align="center">
+      <img src="https://github.com/user-attachments/assets/9c9ecf9b-31a9-4318-8757-ee1f3ca86e46" alt="Screenshot 3" height="260">
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" align="center">
+      <img src="https://github.com/user-attachments/assets/5668382d-f9ea-41fe-820d-ca28fc4950db" alt="Screenshot 4" height="260">
+    </td>
+    <td width="33%" align="center">
+      <img src="https://github.com/user-attachments/assets/f83f8b5e-68d7-4b63-85d7-32255e967a9a" alt="Screenshot 5" height="260">
+    </td>
+    <td width="33%" align="center">
+      <img src="https://github.com/user-attachments/assets/130b66ba-a60e-4351-80bb-a209862547c8" alt="Screenshot 6" height="260">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center">
+      <img src="https://github.com/user-attachments/assets/eee09588-2a90-4504-88cd-fc141f647173" alt="Screenshot 7" height="260">
+    </td>
+  </tr>
+</table>
+
+<img width="1913" height="905" alt="image" src="https://github.com/user-attachments/assets/a479fe36-f466-41b2-96bb-f59e6f527594" />
 
 <div style="page-break-after: always;"></div>
 
@@ -62,6 +94,8 @@ For the correct operation of the "*Delete not played items*" function, there are
       - recently downloaded files can be deleted on the first cleanup run if your software (Radarr, download client, etc...) modifies the file creation date (like sets it from metadata of download or something).
   3. Change it to "*Use date scanned into the library*"
       - when using software that can update files at any time (Radarr, etc...), it is possible that the file will be updated after being played, and thus the creation date in Jellyfin will also be updated. It will not be deleted because the creation date will be later than the watch date.
+
+<img width="1174" height="724" alt="image" src="https://github.com/user-attachments/assets/9368c966-880c-47c8-8184-d9fa9184d946" />
 
 ## Debugging
 
