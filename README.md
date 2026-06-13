@@ -40,7 +40,7 @@ Enhancements in this fork include:
       <img src="https://github.com/user-attachments/assets/f83f8b5e-68d7-4b63-85d7-32255e967a9a" alt="Screenshot 5" height="260">
     </td>
     <td width="33%" align="center">
-      <img src="https://github.com/user-attachments/assets/130b66ba-a60e-4351-80bb-a209862547c8" alt="Screenshot 6" height="260">
+      <img src="https://github.com/user-attachments/assets/cef6efe2-aa2a-434f-b20c-17e772798e5e" alt="Screenshot 6" height="260">
     </td>
   </tr>
   <tr>
