@@ -15,5 +15,6 @@ public class MediaCleanupTaskTests
 
         Assert.DoesNotContain(instanceFields, field => field.FieldType == typeof(StructuredConfig));
         Assert.DoesNotContain(instanceFields, field => field.FieldType == typeof(ArrDeletionService));
+        Assert.DoesNotContain(instanceFields, field => field.FieldType == typeof(LeavingSoonCollectionService));
     }
 }
