@@ -33,7 +33,6 @@ public class MediaCleanupTask(
 {
     private readonly ILogger _logger = loggerFactory.CreateLogger<MediaCleanupTask>();
     private readonly NotificationService _notificationService = new(activityManager);
-    private readonly LeavingSoonCollectionService _leavingSoonCollectionService = new(loggerFactory.CreateLogger<LeavingSoonCollectionService>(), libraryManager, collectionManager);
     private readonly FilterService _filterService = new(loggerFactory.CreateLogger<FilterService>());
 
     public bool IsDryRun { get; init; }
@@ -152,14 +151,17 @@ public class MediaCleanupTask(
             "Leaving Soon candidates: {CandidateCount} candidate(s), {ExcludedCount} excluded because already due for deletion.",
             leavingSoon.Count,
             leavingSoonExcludedAsExpired);
-        _leavingSoonCollectionService.AddItemRange(leavingSoon.Select(x => x.Item.Id));
         if (IsDryRun)
         {
             _logger.LogInformation("Dry run: Leaving Soon collection update skipped.");
         }
         else
         {
-            await _leavingSoonCollectionService.Finish();
+            var leavingSoonCollectionService = new LeavingSoonCollectionService(
+                loggerFactory.CreateLogger<LeavingSoonCollectionService>(),
+                libraryManager,
+                collectionManager);
+            await leavingSoonCollectionService.Finish(leavingSoon.Select(x => x.Item));
         }
 
         progress.Report(85);
@@ -168,12 +170,33 @@ public class MediaCleanupTask(
             .ThenBy(x => x.Reason == ExpiredReason.Played ? x.Data.First().LastPlayedDate : x.Item.DateCreated)
             .ToList();
 
+        _logger.LogInformation("Deletion candidates: {CandidateCount} item(s).", deletionItems.Count);
+        var plannedDeletionCount = 0;
+        var actualDeletionCount = 0;
+        var skippedDeletionCount = 0;
+        var failedDeletionCount = 0;
+
         foreach (var item in deletionItems)
         {
             LogDeletion(item);
 
             var deletionResult = await deletionService.DeleteAsync(item, IsDryRun, cancellationToken);
             LogDeletionResult(item, deletionResult);
+            switch (deletionResult.Status)
+            {
+                case ArrDeletionStatus.Planned:
+                    plannedDeletionCount++;
+                    break;
+                case ArrDeletionStatus.Deleted:
+                    actualDeletionCount++;
+                    break;
+                case ArrDeletionStatus.Skipped:
+                    skippedDeletionCount++;
+                    break;
+                case ArrDeletionStatus.Failed:
+                    failedDeletionCount++;
+                    break;
+            }
 
             if (IsDryRun || deletionResult.Status != ArrDeletionStatus.Deleted)
             {
@@ -191,6 +214,14 @@ public class MediaCleanupTask(
 
             await _notificationService.CreateNotification(item);
         }
+
+        _logger.LogInformation(
+            "Deletion summary: {CandidateCount} candidate(s), {PlannedCount} planned, {DeletedCount} deleted, {SkippedCount} skipped, {FailedCount} failed.",
+            deletionItems.Count,
+            plannedDeletionCount,
+            actualDeletionCount,
+            skippedDeletionCount,
+            failedDeletionCount);
 
         progress.Report(100);
     }
